@@ -37,7 +37,7 @@
                     <div class="card-body">
                         <div class="col-md-10">
                             @can('work')
-                            @dump(Auth::user()->isAdmin(), \Illuminate\Support\Facades\Auth::user()->file->name)
+                            @dump(Auth::user()->isAdmin(), \Illuminate\Support\Facades\Auth::user()?->file?->name)
                             @endcan
                         </div>
                     </div>
