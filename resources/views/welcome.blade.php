@@ -8,11 +8,11 @@
                     <div class="carousel-inner">
                         @foreach ($exhibitions->pluck('expositions')->flatten() as $key => $exposition)
                             <div class="carousel-item @if ($key === 0) active @endif">
-                                @if($exposition->paintings->first()->file->name !== null)<img src="{{asset('storage/img/paintings/'.$exposition->paintings->first()->file->name)}}" alt="...">@endif
+                                @if($exposition->paintings->first()?->file?->name !== null)<img src="{{asset('storage/img/paintings/'.$exposition->paintings->first()?->file?->name)}}" alt="...">@endif
                                 <div class="carousel-caption d-none d-md-block">
-                                    <h5>{{$exposition->name}}</h5>
+                                    <h5>{{$exposition?->name}}</h5>
                                     @if ($exposition->has('exhibition'))
-                                        <p>Экспозиция представлена на выставке {{$exposition->exhibition->name}}</p>
+                                        <p>Экспозиция представлена на выставке {{$exposition?->exhibition?->name}}</p>
                                     @endif
                                 </div>
                             </div>
