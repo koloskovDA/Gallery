@@ -1,0 +1,15 @@
+#vk_groups iframe {height:350px!important;overflow:inherit!important;display:block;}
+.box {height:370px;}
+
+.news {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
+body {
+    background-image: url("{{ asset('storage/img/templates/ranger-4df6c1b6.png') }}") ; /* Путь к фоновому изображению */
+    background-attachment: fixed; /* Фиксируем фон веб-страницы */
+}
