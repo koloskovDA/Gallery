@@ -21,13 +21,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware('auth')->get('/profile', \App\Http\Livewire\Profile::class)->name('profile');
 
 Route::get('/exhibitions', \App\Http\Livewire\Exhibitions::class)->name('exhibitions');
-Route::get('/expositions', \App\Http\Livewire\Expositions::class)->name('expositions');
+Route::get('/exhibition/{exhibition_id}', \App\Http\Livewire\Exhibition::class)->name('admin.exhibition');
+Route::get('/exposition/{exposition_id}', \App\Http\Livewire\Exposition::class)->name('admin.exposition');
 
 
 Route::prefix('admin')->middleware('admin')->group(function() {
     Route::get('/exhibitions', \App\Http\Livewire\Exhibitions::class)->name('admin.exhibitions');
-    Route::get('/exhibition/{exhibition_id}', \App\Http\Livewire\Exhibition::class)->name('admin.exhibition');
-    Route::get('/exposition/{exposition_id}', \App\Http\Livewire\Exposition::class)->name('admin.exposition');
     Route::get('/directions', \App\Http\Livewire\Directions::class)->name('admin.directions');
     Route::get('/types', \App\Http\Livewire\Types::class)->name('admin.types');
     Route::get('/authors', \App\Http\Livewire\Authors::class)->name('admin.authors');

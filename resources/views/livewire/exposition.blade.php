@@ -4,9 +4,11 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Картины экспозиции
+                        @can('work')
                         <button class="btn btn-success float-right" data-toggle="modal"
                                 data-target="#exampleModalCenter">Добавить картину
                         </button>
+                            @endcan
                     </div>
 
                     <div class="card-body">
@@ -49,6 +51,7 @@
                                         {{$painting->owner->FIO}}
                                     </td>
                                     <td>{{$painting->created_at}}</td>
+                                    @can('work')
                                     <td class="pl-0 pr-0"><input class="btn btn-warning btn-sm" value="E" type="button"
                                                                  wire:click="editPainting({{$painting->id}})"
                                                                  data-toggle="modal" data-target="#exampleModalCenter">
@@ -56,6 +59,7 @@
                                     <td class="pl-0 pr-0"><input class="btn btn-danger btn-sm" value="X" type="button"
                                                                  wire:click="deletePainting({{$painting->id}})">
                                     </td>
+                                        @endcan
                                 </tr>
                             @endforeach
                         </table>

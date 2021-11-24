@@ -66,9 +66,6 @@ background-attachment: fixed; background-size: cover;">
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('exhibitions')}}">Выставки</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('expositions')}}">Экспозиции</a>
-                        </li>
                         @endif
                         @endauth
                     @guest
@@ -77,9 +74,6 @@ background-attachment: fixed; background-size: cover;">
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('exhibitions')}}">Выставки</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('expositions')}}">Экспозиции</a>
                             </li>
                         @endguest
                 </ul>

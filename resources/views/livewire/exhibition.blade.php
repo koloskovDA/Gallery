@@ -4,9 +4,11 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Экспозиции
+                        @can('work')
                         <button class="btn btn-success float-right" data-toggle="modal"
                                 data-target="#exampleModalCenter">Добавить экспозицию
                         </button>
+                        @endcan
                     </div>
 
                     <div class="card-body">
@@ -23,6 +25,7 @@
                                         <a href="{{route('admin.exposition', ['exposition_id' => $exposition->id])}}">{{$exposition->name}}</a>
                                     </td>
                                     <td>{{$exposition->created_at}}</td>
+                                    @can('work')
                                     <td class="pl-0 pr-0"><input class="btn btn-warning btn-sm" value="E" type="button"
                                                                  wire:click="editExposition({{$exposition->id}})"
                                                                  data-toggle="modal" data-target="#exampleModalCenter">
@@ -30,6 +33,7 @@
                                     <td class="pl-0 pr-0"><input class="btn btn-danger btn-sm" value="X" type="button"
                                                                  wire:click="deleteExposition({{$exposition->id}})">
                                     </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                         </table>
