@@ -159,6 +159,8 @@ background-attachment: fixed; background-size: cover;">
             @livewire('owners')
         @elseif (strpos(url()->current(), 'paintings'))
             @livewire('paintings')
+        @elseif (strpos(url()->current(), 'profile'))
+            @livewire('profile')
         @elseif (strpos(url()->current(), 'types'))
             @livewire('types')
         @else
