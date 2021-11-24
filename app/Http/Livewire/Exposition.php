@@ -70,7 +70,7 @@ class Exposition extends Component
     public function uploadImage($fileName)
     {
         $image = $this->file;
-        $img = Image::make($image->getRealPath())->encode('jpg', 65)->fit(1280, 720, function ($c) {
+        $img = Image::make($image->getRealPath())->encode('jpg', 65)->fit(1280, 400, function ($c) {
             $c->aspectRatio();
             $c->upsize();
         });
