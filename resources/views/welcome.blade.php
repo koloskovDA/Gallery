@@ -41,7 +41,7 @@
                             @foreach ($exhibitions as $exhibition)
                                 <div class="card" style="width: 18rem;">
                                     <div class="img">
-                                    <img class="card-img-top" style="filter: brightness(50%);" src="{{asset('storage/img/paintings/'.$exhibition->expositions?->first()?->paintings?->first()?->file?->name)}}"
+                                    <img class="card-img-top" style="filter: brightness(50%); max-height: 100px;" src="{{asset('storage/img/paintings/'.$exhibition->expositions?->first()?->paintings?->first()?->file?->name)}}"
                                                                     alt="Card image cap">
                                     </div>
                                     <div class="card-img-overlay">
