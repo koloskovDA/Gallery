@@ -38,7 +38,7 @@
 
                     <div class="card-body">
                         <div class="row justify-content-center">
-                            @foreach ($exhibitions->sortBy('starts_at') as $exhibition)
+                            @foreach ($exhibitions->sortBy('starts_at')->where('starts_at', '>', now()) as $exhibition)
                                 <div class="card" style="width: 18rem;">
                                     <div class="img">
                                     <img class="card-img-top" style="filter: brightness(50%); max-height: 200px;" src="{{asset('storage/img/paintings/'.$exhibition->expositions?->first()?->paintings?->first()?->file?->name)}}"
