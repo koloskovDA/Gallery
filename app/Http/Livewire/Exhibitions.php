@@ -54,7 +54,7 @@ class Exhibitions extends Component
         $this->editableExhibition->starts_at = $this->starts_at;
         $this->editableExhibition->ends_at = $this->ends_at;
         $this->editableExhibition->save();
-        $this->editableExhibition->auction->starts_at = $this->auction_date;
+        $this->editableExhibition->auction()->starts_at = $this->auction_date;
         $this->editableExhibition->auction()->delete();
         $this->editableExhibition->auction()->save($this->editableExhibition->auction);
 
