@@ -12,7 +12,7 @@
     object-fit: cover;">
                                 @if($exposition->paintings->first()?->file?->name !== null) <div class="img"><img src="{{asset('storage/img/paintings/background/'.$exposition->paintings->first()?->file?->name)}}" alt="..."></div>@endif
                                 <div class="carousel-caption d-none d-md-block">
-                                    <h5>Картина «{{$exposition->paintings->first()?->name}}», {{$exposition->paintings->first()?->author->FIO}}, из экспозиции «{{$exposition?->name}}»</h5>
+                                    <h5>«{{$exposition->paintings->first()?->name}}», {{$exposition->paintings->first()?->author->FIO}}, {{$exposition->paintings->first()?->year}} год. Из экспозиции «{{$exposition?->name}}»</h5>
                                     @if ($exposition->has('exhibition'))
                                         <p>Представлена на выставке «{{$exposition?->exhibition?->name}}»</p>
                                     @endif
