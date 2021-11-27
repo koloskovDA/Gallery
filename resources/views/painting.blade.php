@@ -14,10 +14,14 @@
                             <ul>
                                 <li>Название: {{$painting->name}}</li>
                                 <li>Описание: {{$painting->description}}</li>
-                                <li>Автор: {{$painting->author->FIO}}</li>
-                                <li>Владелец: {{$painting->owner->FIO}}</li>
-                                <li>Тип: {{$painting->type->name}}</li>
-                                <li>Направление: {{$painting->direction->name}}</li>
+                                <hr/>
+                                <img src="{{asset('storage/img/authors/'.$painting?->author?->file?->name)}}" alt="">
+                                <li>Автор: <a href="{{route('author.paintings', [$painting->author->id])}}">{{$painting->author->FIO}}</a></li>
+                                <hr/>
+                                <img src="{{asset('storage/img/owners/'.$painting?->owner?->file?->name)}}" alt="">
+                                <li>Владелец: <a href="{{route('owner.paintings', [$painting->owner->id])}}">{{$painting->owner->FIO}}</a></li>
+                                <li>Тип: <a href="{{route('type.paintings', [$painting->type->id])}}">{{$painting->type->name}}</a></li>
+                                <li>Направление: <a href="{{route('direction.paintings', [$painting->direction->id])}}">{{$painting->direction->name}}</a></li>
                                 <hr/>
                                 <li>Участвует в экспозиции: {{$painting->exposition->name}}</li>
                             </ul>

@@ -45,20 +45,20 @@ class HomeController extends Controller
     {
         $paintings = Painting::where('type_id', $type_id)->get();
 
-        return view('dP', ['paintings' => $paintings]);
+        return view('tP', ['paintings' => $paintings]);
     }
 
     public function authorPaintings($author_id)
     {
         $paintings = Painting::where('author_id', $author_id)->get();
 
-        return view('dP', ['paintings' => $paintings]);
+        return view('aP', ['paintings' => $paintings]);
     }
 
     public function ownerPaintings($owner_id)
     {
         $paintings = Painting::where('owner_id', $owner_id)->get();
 
-        return view('dP', ['paintings' => $paintings]);
+        return view('oP', ['paintings' => $paintings]);
     }
 }
