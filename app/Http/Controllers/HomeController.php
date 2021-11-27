@@ -28,7 +28,9 @@ class HomeController extends Controller
 
     public function welcome()
     {
-        $exhibitions = Exhibition::orderBy('starts_at', 'desc')->with('expositions.paintings.file')->limit(5)->get();
+        $exhibitions = Exhibition::inRandomOrder()->with(['expositions.paintings' => function ($query) {
+            $query->inRandomOrder()->with('file');
+        }])->limit(5)->get();
         return view('welcome', ['exhibitions' => $exhibitions]);
     }
 
