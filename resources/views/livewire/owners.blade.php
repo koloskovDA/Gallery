@@ -4,7 +4,9 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Владельцы
+                        @can('work')
                         <button class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModalCenter">Добавить владельца</button>
+                            @endcan
                     </div>
 
                     <div class="card-body">
@@ -18,13 +20,15 @@
                             </thead>
                             @foreach ($owners as $owner)
                                 <tr>
-                                    <td>{{$owner->FIO}}</td>
+                                    <td><a href="{{route('owner.paintings', [$owner->id])}}">{{$owner->FIO}}</a></td>
                                     @if ($owner->file !== null)
                                         <td><img src="{{asset('storage/img/Owners/'.$owner->file->name)}}" width="50px" alt=""></td>
                                     @endif
                                     <td>{{$owner->created_at}}</td>
+                                    @can('work')
                                     <td class="pl-0 pr-0"><input class="btn btn-warning btn-sm" value="E" type="button" wire:click="editOwner({{$owner->id}})" data-toggle="modal" data-target="#exampleModalCenter"></td>
                                     <td class="pl-0 pr-0"><input class="btn btn-danger btn-sm" value="X" type="button" wire:click="deleteOwner({{$owner->id}})"></td>
+                                        @endcan
                                 </tr>
                             @endforeach
                         </table>

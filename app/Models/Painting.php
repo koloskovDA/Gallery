@@ -33,4 +33,9 @@ class Painting extends Model
     {
         return $this->belongsTo(Direction::class);
     }
+
+    public function exposition()
+    {
+        return $this->belongsTo(Exposition::class);
+    }
 }

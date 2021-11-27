@@ -19,6 +19,8 @@ class Exposition extends Component
 
     public $name;
 
+    public $description;
+
     public $direction;
 
     public $directions;
@@ -49,6 +51,7 @@ class Exposition extends Component
     {
         $painting = new \App\Models\Painting();
         $painting->name = $this->name;
+        $painting->description = $this->description;
         $painting->direction_id = $this->direction;
         $painting->type_id = $this->type;
         $painting->author_id = $this->author;
@@ -70,12 +73,12 @@ class Exposition extends Component
     public function uploadImage($fileName)
     {
         $image = $this->file;
-        $img = Image::make($image->getRealPath())->encode('jpg', 65)->fit(1280, 400, function ($c) {
-            $c->aspectRatio();
-            $c->upsize();
-        });
+        $img = Image::make($image->getRealPath())->encode('jpg', 65);
+        $img_back = Image::make($image->getRealPath())->encode('jpg', 65)->brightness(-50)->fit(1280, 400);
         $img->stream(); // <-- Key point
         Storage::disk('local')->put('public/img/paintings' . '/' . $fileName, $img, 'public');
+        $img_back->stream();
+        Storage::disk('local')->put('public/img/paintings/background' . '/' . $fileName, $img_back, 'public');
         $this->file = null;
     }
 
@@ -84,6 +87,7 @@ class Exposition extends Component
         $this->keyToEdit = true;
         $this->editablePainting = Painting::find($painting_id);
         $this->name = $this->editablePainting->name;
+        $this->description = $this->editablePainting->description;
         $this->direction = $this->editablePainting->direction_id;
         $this->type = $this->editablePainting->type_id;
         $this->author = $this->editablePainting->author_id;
@@ -95,6 +99,7 @@ class Exposition extends Component
     public function updatePainting()
     {
         $this->editablePainting->name = $this->name;
+        $this->editablePainting->description = $this->description;
         $this->editablePainting->direction_id = $this->direction;
         $this->editablePainting->type_id = $this->type;
         $this->editablePainting->author_id = $this->author;

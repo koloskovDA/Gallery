@@ -4,7 +4,9 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Виды
+                        @can('work')
                         <button class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModalCenter">Добавить вид</button>
+                            @endcan
                     </div>
 
                     <div class="card-body">
@@ -17,10 +19,12 @@
                             </thead>
                             @foreach ($types as $type)
                                 <tr>
-                                    <td>{{$type->name}}</td>
+                                    <td><a href="{{route('type.paintings', [$type->id])}}">{{$type->name}}</a></td>
                                     <td>{{$type->created_at}}</td>
+                                    @can('work')
                                     <td class="pl-0 pr-0"><input class="btn btn-warning btn-sm" value="E" type="button" wire:click="editType({{$type->id}})" data-toggle="modal" data-target="#exampleModalCenter"></td>
                                     <td class="pl-0 pr-0"><input class="btn btn-danger btn-sm" value="X" type="button" wire:click="deleteType({{$type->id}})"></td>
+                                        @endcan
                                 </tr>
                             @endforeach
                         </table>

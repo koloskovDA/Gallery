@@ -24,11 +24,13 @@ Route::get('/exhibitions', \App\Http\Livewire\Exhibitions::class)->name('exhibit
 Route::get('/exhibition/{exhibition_id}', \App\Http\Livewire\Exhibition::class)->name('admin.exhibition');
 Route::get('/exposition/{exposition_id}', \App\Http\Livewire\Exposition::class)->name('admin.exposition');
 
+Route::get('/directions', \App\Http\Livewire\Directions::class)->name('directions');
+Route::get('/types', \App\Http\Livewire\Types::class)->name('types');
+Route::get('/authors', \App\Http\Livewire\Authors::class)->name('authors');
+Route::get('/owners', \App\Http\Livewire\Owners::class)->name('owners');
 
-Route::prefix('admin')->middleware('admin')->group(function() {
-    Route::get('/exhibitions', \App\Http\Livewire\Exhibitions::class)->name('admin.exhibitions');
-    Route::get('/directions', \App\Http\Livewire\Directions::class)->name('admin.directions');
-    Route::get('/types', \App\Http\Livewire\Types::class)->name('admin.types');
-    Route::get('/authors', \App\Http\Livewire\Authors::class)->name('admin.authors');
-    Route::get('/owners', \App\Http\Livewire\Owners::class)->name('admin.owners');
-});
+Route::get('/d_p/{direction_id}', [\App\Http\Controllers\HomeController::class, 'directionPaintings'])->name('direction.paintings');
+Route::get('/t_p/{type_id}', [\App\Http\Controllers\HomeController::class, 'typePaintings'])->name('type.paintings');
+Route::get('/a_p/{author_id}', [\App\Http\Controllers\HomeController::class, 'authorPaintings'])->name('author.paintings');
+Route::get('/o_p/{owner_id}', [\App\Http\Controllers\HomeController::class, 'ownerPaintings'])->name('owner.paintings');
+Route::get('/painting/{painting_id}', [\App\Http\Controllers\HomeController::class, 'painting'])->name('painting');

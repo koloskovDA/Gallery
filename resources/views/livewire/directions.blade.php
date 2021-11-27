@@ -4,7 +4,9 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Направления
+                        @can('work')
                         <button class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModalCenter">Добавить направление</button>
+                            @endcan
                     </div>
 
                     <div class="card-body">
@@ -17,10 +19,12 @@
                             </thead>
                             @foreach ($directions as $direction)
                                 <tr>
-                                    <td>{{$direction->name}}</td>
+                                    <td><a href="{{route('direction.paintings', [$direction->id])}}">{{$direction->name}}</a></td>
                                     <td>{{$direction->created_at}}</td>
+                                    @can('work')
                                     <td class="pl-0 pr-0"><input class="btn btn-warning btn-sm" value="E" type="button" wire:click="editDirection({{$direction->id}})" data-toggle="modal" data-target="#exampleModalCenter"></td>
                                     <td class="pl-0 pr-0"><input class="btn btn-danger btn-sm" value="X" type="button" wire:click="deleteDirection({{$direction->id}})"></td>
+                                        @endcan
                                 </tr>
                             @endforeach
                         </table>

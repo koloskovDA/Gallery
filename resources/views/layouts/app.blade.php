@@ -45,19 +45,19 @@ background-attachment: fixed; background-size: cover;">
                                 <a class="nav-link" href="{{route('/')}}">Главная</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin.exhibitions')}}">Выставки</a>
+                                <a class="nav-link" href="{{route('exhibitions')}}">Выставки</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin.directions')}}">Направления</a>
+                                <a class="nav-link" href="{{route('directions')}}">Направления</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin.types')}}">Виды</a>
+                                <a class="nav-link" href="{{route('types')}}">Виды</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin.authors')}}">Авторы</a>
+                                <a class="nav-link" href="{{route('authors')}}">Авторы</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin.owners')}}">Владельцы</a>
+                                <a class="nav-link" href="{{route('owners')}}">Владельцы</a>
                             </li>
                     @else
                         <li class="nav-item">
@@ -74,6 +74,18 @@ background-attachment: fixed; background-size: cover;">
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('exhibitions')}}">Выставки</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('directions')}}">Направления</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('types')}}">Виды</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('authors')}}">Авторы</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('owners')}}">Владельцы</a>
                             </li>
                         @endguest
                 </ul>

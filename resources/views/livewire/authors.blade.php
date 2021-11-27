@@ -4,7 +4,9 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Авторы
+                        @can('work')
                         <button class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModalCenter">Добавить автора</button>
+                            @endcan
                     </div>
 
                     <div class="card-body">
@@ -18,13 +20,15 @@
                             </thead>
                             @foreach ($authors as $author)
                                 <tr>
-                                    <td>{{$author->FIO}}</td>
+                                    <td><a href="{{route('author.paintings', [$author->id])}}">{{$author->FIO}}</a></td>
                                     @if ($author->file !== null)
                                         <td><img src="{{asset('storage/img/authors/'.$author->file->name)}}" width="50px" alt=""></td>
                                     @endif
                                     <td>{{$author->created_at}}</td>
+                                    @can('work')
                                     <td class="pl-0 pr-0"><input class="btn btn-warning btn-sm" value="E" type="button" wire:click="editAuthor({{$author->id}})" data-toggle="modal" data-target="#exampleModalCenter"></td>
                                     <td class="pl-0 pr-0"><input class="btn btn-danger btn-sm" value="X" type="button" wire:click="deleteAuthor({{$author->id}})"></td>
+                                        @endcan
                                 </tr>
                             @endforeach
                         </table>

@@ -7,12 +7,14 @@
                 <div id="carouselExampleIndicators" class="carousel slide mb-2" data-ride="carousel">
                     <div class="carousel-inner">
                         @foreach ($exhibitions->pluck('expositions')->flatten() as $key => $exposition)
-                            <div class="carousel-item @if ($key === 0) active @endif">
-                                @if($exposition->paintings->first()?->file?->name !== null)<img src="{{asset('storage/img/paintings/'.$exposition->paintings->first()?->file?->name)}}" alt="...">@endif
+                            <div class="carousel-item @if ($key === 0) active @endif" style="width: 100%;
+    height: 15vw;
+    object-fit: cover;">
+                                @if($exposition->paintings->first()?->file?->name !== null) <div class="img"><img src="{{asset('storage/img/paintings/background/'.$exposition->paintings->first()?->file?->name)}}" alt="..."></div>@endif
                                 <div class="carousel-caption d-none d-md-block">
-                                    <h5>{{$exposition?->name}}</h5>
+                                    <h5>Картина «{{$exposition->paintings->first()?->name}}», {{$exposition->paintings->first()?->author->FIO}}, из экспозиции «{{$exposition?->name}}»</h5>
                                     @if ($exposition->has('exhibition'))
-                                        <p>Экспозиция представлена на выставке {{$exposition?->exhibition?->name}}</p>
+                                        <p>Представлена на выставке «{{$exposition?->exhibition?->name}}»</p>
                                     @endif
                                 </div>
                             </div>
@@ -32,16 +34,18 @@
         <div class="row justify-content-center pt-2">
             <div class="col-md-12">
                 <div class="card h-100">
-                    <div class="card-header">Ближайшие выставки <a href="" class="float-right">Ближайшие выставки</a></div>
+                    <div class="card-header">Ближайшие выставки <a href="{{route('exhibitions')}}" class="float-right">Все выставки</a></div>
 
                     <div class="card-body">
                         <div class="row justify-content-center">
                             @foreach ($exhibitions as $exhibition)
-                                <div class="card" style="width: 18rem; background-color: rgba(0,0,0,0.6);">
-                                    <img class="card-img-top" style="background-color: rgba(0,0,0,0.6);" src="{{asset('storage/img/paintings/'.$exhibition->expositions?->first()?->paintings?->first()?->file?->name)}}"
+                                <div class="card" style="width: 18rem;">
+                                    <div class="img">
+                                    <img class="card-img-top" style="filter: brightness(50%);" src="{{asset('storage/img/paintings/'.$exhibition->expositions?->first()?->paintings?->first()?->file?->name)}}"
                                                                     alt="Card image cap">
+                                    </div>
                                     <div class="card-img-overlay">
-                                        <h5 class="card-title actions-title">{{$exhibition->name}} </h5><span class="badge badge-primary">Начало: {{Carbon\Carbon::make($exhibition->starts_at)->format('d F Y')}}</span>
+                                        <h5 class="card-title actions-title">{{$exhibition->name}} </h5><span class="badge badge-primary">Начало: {{Carbon\Carbon::make($exhibition->starts_at)->translatedFormat('d F Y')}}</span>
                                         <br>
                                         <p class="card-text actions-text">
                                             Экспозиции:
@@ -55,7 +59,7 @@
                                         </p>
                                     </div>
                                     <div class="card-footer">
-                                        Начало аукциона: {{$exhibition->auction->starts_at}}
+                                        Начало аукциона: {{Carbon\Carbon::make($exhibition->auction->starts_at)->translatedFormat('d F Y')}}
                                     </div>
                                 </div>
                             @endforeach

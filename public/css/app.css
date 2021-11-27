@@ -10031,11 +10031,3 @@ h3 {
 .actions-text, .actions-title {
   color: white;
 }
-
-.card-img-top {
-  width: 100%;
-  height: 15vw;
-  -o-object-fit: cover;
-     object-fit: cover;
-  background-color: black;
-}

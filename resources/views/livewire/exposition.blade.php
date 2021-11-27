@@ -29,7 +29,7 @@
                             @foreach ($paintings as $painting)
                                 <tr>
                                     <td>
-                                        {{$painting->name}}
+                                        <a href="{{route('painting', [$painting->id])}}">{{$painting->name}}</a>
                                     </td>
                                     <td>
                                         {{$painting->direction->name}}
@@ -83,6 +83,10 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">Название</label>
                             <input type="text" wire:model="name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Описание</label>
+                            <textarea wire:model="description" class="form-text" cols="50" rows="10"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Направление</label>
@@ -155,6 +159,10 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Название</label>
                                     <input type="text" wire:model="name" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Описание</label>
+                                    <textarea wire:model="description" id="" class="form-text" cols="50" rows="10"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Направление</label>
