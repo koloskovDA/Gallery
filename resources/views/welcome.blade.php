@@ -38,7 +38,7 @@
 
                     <div class="card-body">
                         <div class="row justify-content-center">
-                            @foreach ($exhibitions as $exhibition)
+                            @foreach ($exhibitions->sortByDesc('starts_at') as $exhibition)
                                 <div class="card" style="width: 18rem;">
                                     <div class="img">
                                     <img class="card-img-top" style="filter: brightness(50%); max-height: 200px;" src="{{asset('storage/img/paintings/'.$exhibition->expositions?->first()?->paintings?->first()?->file?->name)}}"
@@ -50,7 +50,7 @@
                                         <p class="card-text actions-text">
                                             Экспозиции:
                                             <br>
-                                            @foreach ($exhibition->expositions->sortByDesc('starts_at') as $exposition)
+                                            @foreach ($exhibition->expositions as $exposition)
                                                 «{{$exposition->name}}»:
                                                 @foreach ($exposition->paintings as $painting)
                                                     «{{$painting->name}}», {{$painting->author->FIO}}.
