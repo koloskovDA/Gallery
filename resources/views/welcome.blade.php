@@ -50,7 +50,7 @@
                                         <p class="card-text actions-text">
                                             Экспозиции:
                                             <br>
-                                            @foreach ($exhibition->expositions as $exposition)
+                                            @foreach ($exhibition->expositions->sortBy('starts_at') as $exposition)
                                                 «{{$exposition->name}}»:
                                                 @foreach ($exposition->paintings as $painting)
                                                     «{{$painting->name}}», {{$painting->author->FIO}}.
