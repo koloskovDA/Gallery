@@ -60,12 +60,24 @@ background-attachment: fixed; background-size: cover;">
                                 <a class="nav-link" href="{{route('owners')}}">Владельцы</a>
                             </li>
                     @else
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('/')}}">Главная</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('exhibitions')}}">Выставки</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('/')}}">Главная</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('exhibitions')}}">Выставки</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('directions')}}">Направления</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('types')}}">Виды</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('authors')}}">Авторы</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('owners')}}">Владельцы</a>
+                            </li>
                         @endif
                         @endauth
                     @guest
