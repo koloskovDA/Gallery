@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddTextFieldToPaintings extends Migration
+class CreateTicketsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddTextFieldToPaintings extends Migration
      */
     public function up()
     {
-        Schema::table('paintings', function (Blueprint $table) {
-            $table->text('description')->after('name')->nullable();
+        Schema::create('tickets', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('exhibition_id')->constrained('exhibitions');
+            $table->foreignId('user_id')->constrained('users');
+            $table->timestamps();
         });
     }
 
@@ -25,6 +28,6 @@ class AddTextFieldToPaintings extends Migration
      */
     public function down()
     {
-        Schema::dropColumns('paintings', ['description']);
+        Schema::dropIfExists('tickets');
     }
 }

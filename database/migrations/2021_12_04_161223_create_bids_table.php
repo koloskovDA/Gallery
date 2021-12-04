@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAuctionsTable extends Migration
+class CreateBidsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateAuctionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('auctions', function (Blueprint $table) {
+        Schema::create('bids', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('exhibition_id')->constrained('exhibitions');
-            $table->dateTime('starts_at')->nullable();
+            $table->foreignId('auction_id')->constrained('auctions');
+            $table->foreignId('painting_id')->constrained('paintings');
+            $table->foreignId('user_id')->constrained('users');
+            $table->integer('sum');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateAuctionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('auctions');
+        Schema::dropIfExists('bids');
     }
 }

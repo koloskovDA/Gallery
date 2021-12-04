@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddTextFieldToPaintings extends Migration
+class AddExhibitionsTableTicketsCountId extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddTextFieldToPaintings extends Migration
      */
     public function up()
     {
-        Schema::table('paintings', function (Blueprint $table) {
-            $table->text('description')->after('name')->nullable();
+        Schema::table('exhibitions', function (Blueprint $table) {
+            $table->integer('tickets_count')->nullable();
         });
     }
 
@@ -25,6 +25,6 @@ class AddTextFieldToPaintings extends Migration
      */
     public function down()
     {
-        Schema::dropColumns('paintings', ['description']);
+        Schema::dropColumns('exhibitions', ['tickets_count']);
     }
 }

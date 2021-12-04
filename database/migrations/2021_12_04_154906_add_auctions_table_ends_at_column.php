@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddTextFieldToPaintings extends Migration
+class AddAuctionsTableEndsAtColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddTextFieldToPaintings extends Migration
      */
     public function up()
     {
-        Schema::table('paintings', function (Blueprint $table) {
-            $table->text('description')->after('name')->nullable();
+
+        Schema::table('auctions', function(Blueprint $table) {
+            $table->dateTime('ends_at')->after('starts_at')->nullable();
         });
     }
 
@@ -25,6 +26,6 @@ class AddTextFieldToPaintings extends Migration
      */
     public function down()
     {
-        Schema::dropColumns('paintings', ['description']);
+        Schema::dropColumns('auctions', ['ends_at']);
     }
 }

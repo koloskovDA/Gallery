@@ -19,7 +19,10 @@
                                 <td>Дата добавления</td>
                                 <td>Начало</td>
                                 <td>Окончание</td>
+                                <td>Число билетов</td>
                                 <td>Дата начала аукциона</td>
+                                <td>Дата окончания аукциона</td>
+                                <td>Зарезервировать билет</td>
                             </tr>
                             </thead>
                             @foreach ($exhibitions as $exhibition)
@@ -30,7 +33,26 @@
                                     <td>{{$exhibition->created_at}}</td>
                                     <td>{{$exhibition->starts_at}}</td>
                                     <td>{{$exhibition->ends_at}}</td>
+                                    <td>{{$exhibition->tickets_count}}</td>
                                     <td>{{$exhibition->auction?->starts_at}}</td>
+                                    <td>{{$exhibition->auction?->ends_at}}</td>
+                                    <td>
+                                        @if (\Illuminate\Support\Facades\Auth::check())
+                                            @if ((!empty($tickets)) && $tickets->where('exhibition_id', $exhibition->id)->where('user_id', \Illuminate\Support\Facades\Auth::user()->id)->count() > 0)
+                                            <button class="btn btn-outline-info">Зарезервирован</button>
+                                            @elseif ($exhibition->tickets_count > 0)
+                                            <button class="btn btn-success" wire:click="createTicket({{$exhibition->id}})">Зарезервировать</button>
+                                            @else
+                                                <button class="btn btn-outline-light">Билетов нет</button>
+                                            @endif
+                                        @else
+                                            @if ($exhibition->tickets_count > 0)
+                                                <a class="btn btn-success" href="{{ route('login') }}">Зарезервировать</a>
+                                            @else
+                                                <button class="btn btn-outline-light">Билетов нет</button>
+                                            @endif
+                                        @endif
+                                    </td>
                                     @can('work')
                                     <td class="pl-0 pr-0"><input class="btn btn-warning btn-sm" value="E" type="button"
                                                                  wire:click="editExhibition({{$exhibition->id}})"
@@ -76,10 +98,18 @@
                             <label for="exampleInputEmail1">Окончание</label>
                             <input type="datetime-local" wire:model="ends_at" class="form-control">
                         </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Число билетов</label>
+                            <input type="number" wire:model="tickets_count" class="form-control">
+                        </div>
                         <hr/>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Дата проведения аукциона</label>
+                            <label for="exampleInputEmail1">Дата начала аукциона</label>
                             <input type="date" wire:model="auction_date" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Дата окончания аукциона</label>
+                            <input type="date" wire:model="auction_date_ends" class="form-control">
                         </div>
                         <div class="modal-footer">
                             <input type="submit" class="btn btn-primary" data-dismiss="modal"
@@ -111,10 +141,18 @@
                                     <label for="exampleInputEmail1">Окончание</label>
                                     <input type="date" wire:model="ends_at" class="form-control">
                                 </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Число билетов</label>
+                                    <input type="number" wire:model="tickets_count" class="form-control">
+                                </div>
                                 <hr/>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Дата проведения аукциона</label>
                                     <input type="date" wire:model="auction_date" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Дата окончания аукциона</label>
+                                    <input type="date" wire:model="auction_date_ends" class="form-control">
                                 </div>
                                 <div class="modal-footer">
                                     <input type="submit" class="btn btn-primary" data-dismiss="modal"

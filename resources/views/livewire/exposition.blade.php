@@ -23,7 +23,7 @@
                                 <td>Оценочная стоимость</td>
                                 <td>Фото</td>
                                 <td>Владелец</td>
-                                <td>Добавлено в базу</td>
+                                <td>Последняя ставка</td>
                             </tr>
                             </thead>
                             @foreach ($paintings as $painting)
@@ -50,7 +50,7 @@
                                     <td>
                                         {{$painting->owner->FIO}}
                                     </td>
-                                    <td>{{$painting->created_at}}</td>
+                                    <td>{{$painting?->bids?->sortByDesc('sum')?->first()?->sum}} руб., {{$painting?->bids?->sortByDesc('sum')?->first()?->user?->name}}</td>
                                     @can('work')
                                     <td class="pl-0 pr-0"><input class="btn btn-warning btn-sm" value="E" type="button"
                                                                  wire:click="editPainting({{$painting->id}})"

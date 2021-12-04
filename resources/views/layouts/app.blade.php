@@ -141,6 +141,8 @@ background-attachment: fixed; background-size: cover;">
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{route('mytickets')}}">Мои билеты</a>
+                                <a class="dropdown-item" href="{{route('mylots')}}">Мои лоты</a>
                                 <a class="dropdown-item" href="{{route('profile')}}">Настройки профиля</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
@@ -177,6 +179,8 @@ background-attachment: fixed; background-size: cover;">
             @livewire('owners')
         @elseif (strpos(url()->current(), 'paintings'))
             @livewire('paintings')
+        @elseif (strpos(url()->current(), 'painting'))
+            @livewire('painting')
         @elseif (strpos(url()->current(), 'profile'))
             @livewire('profile')
         @elseif (strpos(url()->current(), 'types'))

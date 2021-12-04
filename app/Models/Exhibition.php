@@ -20,4 +20,9 @@ class Exhibition extends Model
     {
         return $this->hasOne(Auction::class);
     }
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
 }

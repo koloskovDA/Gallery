@@ -38,4 +38,9 @@ class Painting extends Model
     {
         return $this->belongsTo(Exposition::class);
     }
+
+    public function bids()
+    {
+        return $this->hasMany(Bid::class);
+    }
 }

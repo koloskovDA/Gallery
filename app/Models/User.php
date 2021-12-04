@@ -67,6 +67,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return false;
     }
 
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
     public function isOrg()
     {
         if ($this->roles->where('role', 'org')->count() !== 0)

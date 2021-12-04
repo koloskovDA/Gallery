@@ -20,6 +20,24 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function myLots()
+    {
+        $paintings = Painting::whereHas('bids', function ($bids) {
+            $bids->where('user_id', Auth::user()->id);
+        })->get();
+
+        return view('my-lots', ['paintings' => $paintings]);
+    }
+
+    public function myTickets()
+    {
+        $exhibitions = Exhibition::whereHas('tickets', function ($tickets) {
+            $tickets->where('user_id', Auth::user()->id);
+        })->get();
+
+        return view('my-tickets', ['exhibitions' => $exhibitions]);
+    }
+
     public function painting($painting_id)
     {
         $painting = Painting::find($painting_id);

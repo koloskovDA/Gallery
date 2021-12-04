@@ -60,6 +60,7 @@
                                     </div>
                                     <div class="card-footer">
                                         Начало аукциона: {{Carbon\Carbon::make($exhibition->auction->starts_at)->translatedFormat('d F Y')}}
+                                        Билетов осталось: {{$exhibition->tickets_count}}
                                     </div>
                                 </div>
                             @endforeach
