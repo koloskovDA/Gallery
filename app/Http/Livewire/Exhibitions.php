@@ -98,7 +98,21 @@ class Exhibitions extends Component
     public function deleteExhibition($exhibition_id)
     {
         $this->editableExhibition = Exhibition::find($exhibition_id);
+        if ($this->editableExhibition->auction !== null) {
+            $this->editableExhibition->auction->bids()->delete();
+        }
+        if ($this->editableExhibition->expositions !== null) {
+            foreach ($this->editableExhibition->expositions as $exposition)
+            {
+                if ($exposition->paintings !== null)
+                {
+                    $exposition->paintings()->delete();
+                }
+            }
+            $this->editableExhibition->expositions()->delete();
+        }
         $this->editableExhibition->auction()->delete();
+        $this->editableExhibition->tickets()->delete();
         $this->editableExhibition->delete();
     }
 
