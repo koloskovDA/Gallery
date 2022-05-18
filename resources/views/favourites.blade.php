@@ -1,12 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Картины автора
+                    <div class="card-header">Избранные картины
                     </div>
 
                     <div class="card-body">
@@ -21,6 +20,7 @@
                                 <td>Оценочная стоимость</td>
                                 <td>Фото</td>
                                 <td>Владелец</td>
+                                <td>Последняя ставка</td>
                             </tr>
                             </thead>
                             @foreach ($paintings as $painting)
@@ -47,6 +47,7 @@
                                     <td>
                                         {{$painting->owner->FIO}}
                                     </td>
+                                    <td>{{$painting?->bids?->sortByDesc('sum')?->first()?->sum}} руб., {{$painting?->bids?->sortByDesc('sum')?->first()?->user?->name}}</td>
                                 </tr>
                             @endforeach
                         </table>
@@ -55,5 +56,4 @@
             </div>
         </div>
     </div>
-</div>
-    @endsection
+@endsection

@@ -14,6 +14,11 @@ class Painting extends Model
         return $this->morphOne(File::class, 'file');
     }
 
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
     public function author()
     {
         return $this->belongsto(Author::class);

@@ -21,6 +21,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware('auth')->get('/profile', \App\Http\Livewire\Profile::class)->name('profile');
 Route::middleware('auth')->get('/mylots', [\App\Http\Controllers\HomeController::class, 'myLots'])->name('mylots');
 Route::middleware('auth')->get('/mytickets', [\App\Http\Controllers\HomeController::class, 'myTickets'])->name('mytickets');
+Route::middleware('auth')->get('/favourites', [\App\Http\Controllers\HomeController::class, 'favourites'])->name('favourites');
+
 
 Route::get('/exhibitions', \App\Http\Livewire\Exhibitions::class)->name('exhibitions');
 Route::get('/exhibition/{exhibition_id}', \App\Http\Livewire\Exhibition::class)->name('admin.exhibition');
@@ -36,3 +38,8 @@ Route::get('/t_p/{type_id}', [\App\Http\Controllers\HomeController::class, 'type
 Route::get('/a_p/{author_id}', [\App\Http\Controllers\HomeController::class, 'authorPaintings'])->name('author.paintings');
 Route::get('/o_p/{owner_id}', [\App\Http\Controllers\HomeController::class, 'ownerPaintings'])->name('owner.paintings');
 Route::get('/painting/{painting_id}', \App\Http\Livewire\Painting::class)->name('painting');
+
+Route::get('/receipts', \App\Http\Livewire\Receipts::class)->middleware('admin')->name('receipts');
+Route::get('/user/{user_id}', \App\Http\Livewire\User::class)->middleware('admin')->name('user');
+
+Route::get('generate-pdf/{ticket_id}', [\App\Http\Controllers\HomeController::class, 'generatePDF'])->name('generatePDF');

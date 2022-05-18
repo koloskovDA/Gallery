@@ -16,6 +16,21 @@
                                     <table>
                                         <tr>
                                             <td>
+                                                Рейтинг: @for ($i = 0; $i < (int)$amountRating; $i++)
+                                                    <span class="fa fa-star checked"></span>
+                                                @endfor
+                                                <br/>
+                                                <button class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#exampleModalCenter">Оценки и комментарии</button>
+                                                @if (Auth::check() && (\Illuminate\Support\Facades\Cache::get(Auth::user()->id) === null || !(\Illuminate\Support\Facades\Cache::get(Auth::user()->id))->contains($painting->id)))
+                                                <button class="btn btn-warning" wire:click="addToFavourites">Добавить в избранное</button>
+                                                @elseif (Auth::check())
+                                                    <button class="btn btn-danger" wire:click="removeFromFavourites">Убрать из избранного</button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
                                                 Закрытие аукциона: {{\Carbon\Carbon::parse($painting?->exposition?->exhibition?->auction?->ends_at)->translatedFormat('d F Y, H:i:s')}}
                                             </td>
                                         </tr>
@@ -88,6 +103,62 @@
                                 <li>Участвует в экспозиции: {{$painting->exposition->name}}</li>
                             </ul>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" wire:ignore.self id="exampleModalCenter" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Оценки и комментарии</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                                @foreach ($ratings->where('painting_id', $painting->id) as $rating)
+<div class="card">
+    <div class="card-header"><h5>@if ($rating->user->file !== null)
+                <img src="{{asset('storage/img/profile/'.$rating->user->file->name)}}" alt="Avatar" width="30px" class="rounded-circle">
+            @else
+                <img src="{{asset('storage/img/templates/noimage.jpg')}}" alt="Avatar" width="30px" class="rounded-circle">
+            @endif{{$rating->user->name}}
+
+        </h5>
+        Оценка: @for ($i = 0; $i < (int)($rating->rating); $i++)
+            <span class="fa fa-star checked"></span>
+        @endfor
+        <p>{{$rating->user->comments->where('painting_id', $painting->id)?->first()?->text}}</p>
+
+    </div>
+</div>
+                                @endforeach
+                        <hr/>
+                                    @if (\Illuminate\Support\Facades\Auth::check() && $ratings->where('user_id', \Illuminate\Support\Facades\Auth::user()->id)->where('painting_id', $painting->id)->count() === 0)
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Оставить оценку</label>
+                            <br><select wire:model="rating">
+                                <option value="5" selected>Отлично</option>
+                                <option value="4">Хорошо</option>
+                                <option value="3">Удовлетворительно</option>
+                                <option value="2">Не очень</option>
+                                <option value="1">Плохо</option>
+                                <option value="0">Отвратительно</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Комментарий</label>
+                            <textarea wire:model="comment" class="form-text" cols="50" rows="4"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary" data-dismiss="modal"
+                                   wire:click="leaveReview">
+                        </div>
+                                    @elseif(Auth::check())
+                        Вы уже оставили свою оценку
+                                        @endif
                     </div>
                 </div>
             </div>

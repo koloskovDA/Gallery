@@ -48,6 +48,16 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public $primaryKey = 'id';
 
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function roles() : HasMany
     {
         return $this->hasMany(Role::class);

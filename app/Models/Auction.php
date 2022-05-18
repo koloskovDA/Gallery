@@ -10,7 +10,7 @@ class Auction extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['starts_at'];
+    protected $fillable = ['starts_at', 'ends_at'];
 
     public function bids() : HasMany
     {

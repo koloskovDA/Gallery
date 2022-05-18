@@ -20,6 +20,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     @livewireStyles
 </head>
 <body style="background-image: url({{ asset('storage/img/templates/ranger-4df6c1b6.png') }}) ; /* Путь к фоновому изображению */
@@ -58,6 +59,9 @@ background-attachment: fixed; background-size: cover;">
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('owners')}}">Владельцы</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('receipts')}}" class="nav-link">Квитанции</a>
                             </li>
                     @else
                             <li class="nav-item">
@@ -144,6 +148,7 @@ background-attachment: fixed; background-size: cover;">
                                 <a class="dropdown-item" href="{{route('mytickets')}}">Мои билеты</a>
                                 <a class="dropdown-item" href="{{route('mylots')}}">Мои лоты</a>
                                 <a class="dropdown-item" href="{{route('profile')}}">Настройки профиля</a>
+                                <a class="dropdown-item" href="{{route('favourites')}}">Избранные картины</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -183,8 +188,12 @@ background-attachment: fixed; background-size: cover;">
             @livewire('painting')
         @elseif (strpos(url()->current(), 'profile'))
             @livewire('profile')
+        @elseif (strpos(url()->current(), 'user'))
+            @livewire('user')
         @elseif (strpos(url()->current(), 'types'))
             @livewire('types')
+        @elseif (strpos(url()->current(), 'receipts'))
+            @livewire('receipts')
         @else
             @yield('content')
         @endif

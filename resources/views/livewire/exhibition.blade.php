@@ -16,7 +16,8 @@
                             <thead class="thead-dark">
                             <tr>
                                 <td>Название</td>
-                                <td>Дата добавления</td>
+                                <td>Начало</td>
+                                <td>Окончание</td>
                             </tr>
                             </thead>
                             @foreach ($expositions as $exposition)
@@ -24,7 +25,16 @@
                                     <td>
                                         <a href="{{route('admin.exposition', ['exposition_id' => $exposition->id])}}">{{$exposition->name}}</a>
                                     </td>
-                                    <td>{{$exposition->created_at}}</td>
+                                    <td>
+                                        @if($exposition->exhibition->starts_at)
+                                            {{\Carbon\Carbon::make($exposition->exhibition->starts_at)->translatedFormat('d F Y (l), H:i')}}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($exposition->exhibition->ends_at)
+                                            {{\Carbon\Carbon::make($exposition->exhibition->ends_at)->translatedFormat('d F Y (l), H:i')}}
+                                        @endif
+                                    </td>
                                     @can('work')
                                     <td class="pl-0 pr-0"><input class="btn btn-warning btn-sm" value="E" type="button"
                                                                  wire:click="editExposition({{$exposition->id}})"

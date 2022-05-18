@@ -10031,3 +10031,7 @@ h3 {
 .actions-text, .actions-title {
   color: white;
 }
+
+.checked {
+  color: orange;
+}

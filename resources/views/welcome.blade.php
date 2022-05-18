@@ -45,7 +45,7 @@
                                                                     alt="Card image cap">
                                     </div>
                                     <div class="card-img-overlay">
-                                        <h5 class="card-title actions-title">{{$exhibition->name}} </h5><span class="badge badge-primary">Начало: {{Carbon\Carbon::make($exhibition->starts_at)->translatedFormat('d F Y')}}</span>
+                                        <h5 class="card-title actions-title">{{$exhibition->name}} </h5><span class="badge badge-primary">Начало: {{Carbon\Carbon::make($exhibition->starts_at)->translatedFormat('d F Y (l), H:i')}}</span>
                                         <br>
                                         <p class="card-text actions-text">
                                             Экспозиции:
@@ -60,7 +60,8 @@
                                     </div>
                                     <div class="card-footer">
                                         Начало аукциона: {{Carbon\Carbon::make($exhibition->auction->starts_at)->translatedFormat('d F Y')}}
-                                        Билетов осталось: {{$exhibition->tickets_count}}
+                                        Осталось {{$exhibition->tickets_count}} билетов.
+                                        Цена: {{$exhibition->price}} руб.
                                     </div>
                                 </div>
                             @endforeach

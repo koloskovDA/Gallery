@@ -9,11 +9,44 @@ use App\Models\Member;
 use App\Models\MemberAction;
 use App\Models\News;
 use App\Models\Painting;
+use App\Models\Ticket;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
+    public function generatePDF($ticket_id)
+    {
+        $ticket = Ticket::find($ticket_id);
+        $data = [
+            'title' => 'Билет #1 на выставку '.$ticket->exhibition->name,
+            'date' => \Carbon\Carbon::make($ticket->exhibition->starts_at)->translatedFormat('d F Y (l), H:i'),
+            'exhibition' => $ticket->exhibition,
+        ];
+
+        $pdf = Pdf::loadView('myPDF', $data);
+
+        return $pdf->download('Билет_#'.$ticket_id.'.pdf');
+    }
+
+    public function favourites()
+    {
+        $collection = new Collection();
+        $pain = null;
+        $paintings = Cache::get(Auth::user()->id);
+        if ($paintings !== null)
+        {
+            foreach ($paintings as $key => $painting)
+            {
+                $pain = Painting::find($painting);
+                $collection->push($pain);
+            }
+        }
+        return view('favourites', ['paintings' => $collection]);
+    }
 
     public function index()
     {

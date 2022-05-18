@@ -15,14 +15,15 @@
                         <table class="table">
                             <thead class="thead-dark">
                             <tr>
-                                <td>Название</td>
-                                <td>Дата добавления</td>
+                                <td>Выставка</td>
                                 <td>Начало</td>
                                 <td>Окончание</td>
+                                <td>Адрес</td>
                                 <td>Число билетов</td>
+                                <td>Цена билета</td>
                                 <td>Дата начала аукциона</td>
                                 <td>Дата окончания аукциона</td>
-                                <td>Зарезервировать билет</td>
+                                <td>Купить билет</td>
                             </tr>
                             </thead>
                             @foreach ($exhibitions as $exhibition)
@@ -30,24 +31,47 @@
                                     <td>
                                         <a href="{{route('admin.exhibition', ['exhibition_id' => $exhibition->id])}}">{{$exhibition->name}}</a>
                                     </td>
-                                    <td>{{$exhibition->created_at}}</td>
-                                    <td>{{$exhibition->starts_at}}</td>
-                                    <td>{{$exhibition->ends_at}}</td>
-                                    <td>{{$exhibition->tickets_count}}</td>
-                                    <td>{{$exhibition->auction?->starts_at}}</td>
-                                    <td>{{$exhibition->auction?->ends_at}}</td>
+                                    <td>
+                                        @if($exhibition->starts_at)
+                                            {{\Carbon\Carbon::make($exhibition->starts_at)->translatedFormat('d F Y (l), H:i')}}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($exhibition->ends_at)
+                                            {{\Carbon\Carbon::make($exhibition->ends_at)->translatedFormat('d F Y (l), H:i')}}
+                                        @endif
+                                    </td>
+                                    <td>{{$exhibition->address}}</td>
+                                    <td>{{$exhibition->tickets_count}} шт.</td>
+                                    <td>{{$exhibition->price}} руб.</td>
+                                    <td>
+                                        @if($exhibition->auction?->starts_at)
+                                            {{\Carbon\Carbon::make($exhibition->auction?->starts_at)->translatedFormat('d F Y (l), H:i')}}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($exhibition->auction?->ends_at)
+                                            {{\Carbon\Carbon::make($exhibition->auction?->ends_at)->translatedFormat('d F Y (l), H:i')}}
+                                        @endif
+                                    </td>
                                     <td>
                                         @if (\Illuminate\Support\Facades\Auth::check())
                                             @if ((!empty($tickets)) && $tickets->where('exhibition_id', $exhibition->id)->where('user_id', \Illuminate\Support\Facades\Auth::user()->id)->count() > 0)
-                                            <button class="btn btn-outline-info">Зарезервирован</button>
+                                                @if($tickets->where('exhibition_id', $exhibition->id)->where('user_id', \Illuminate\Support\Facades\Auth::user()->id)?->first()?->receipt?->status === 'approved')
+                                                    <a class="btn btn-outline-success" href="{{route('generatePDF', $tickets->where('exhibition_id', $exhibition->id)->where('user_id', \Illuminate\Support\Facades\Auth::user()->id)->first()->id)}}">Распечатать</a>
+                                                @elseif($tickets->where('exhibition_id', $exhibition->id)->where('user_id', \Illuminate\Support\Facades\Auth::user()->id)?->first()?->receipt?->status === 'checking')
+                                                    <button class="btn btn-outline-info" disabled>Проверяется</button>
+                                                @else
+                                                    <button class="btn btn-outline-danger" disabled>Отклонено</button>
+                                                @endif
                                             @elseif ($exhibition->tickets_count > 0)
-                                            <button class="btn btn-success" wire:click="createTicket({{$exhibition->id}})">Зарезервировать</button>
+                                                <button class="btn btn-success" wire:click="addReceipt({{$exhibition->id}})" data-toggle="modal" data-target="#exampleModalCenter">Купить</button>
                                             @else
                                                 <button class="btn btn-outline-light">Билетов нет</button>
                                             @endif
                                         @else
                                             @if ($exhibition->tickets_count > 0)
-                                                <a class="btn btn-success" href="{{ route('login') }}">Зарезервировать</a>
+                                                <a class="btn btn-success" href="{{ route('login') }}">Купить</a>
                                             @else
                                                 <button class="btn btn-outline-light">Билетов нет</button>
                                             @endif
@@ -102,6 +126,10 @@
                             <label for="exampleInputEmail1">Число билетов</label>
                             <input type="number" wire:model="tickets_count" class="form-control">
                         </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Цена билета</label>
+                            <input type="number" wire:model="price" class="form-control">
+                        </div>
                         <hr/>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Дата начала аукциона</label>
@@ -116,7 +144,32 @@
                                    wire:click="updateExhibition">
                         </div>
                     </div>
-                    @else
+            @elseif ($editableExhibition !== null && $keyToEdit === null)
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Добавить квитанцию</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                @if ($receiptPhoto !== null)
+                                    <label for="exampleInputEmail1">Квитанция</label>
+                                    <br>
+                                    <img src="{{$receiptPhoto->temporaryUrl()}}" height="100px" width="auto" alt="">
+                                @endif
+                                <hr/>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Сфотографируйте и отправьте квитанцию об оплате</label>
+                                    <input type="file" wire:model="receiptPhoto" class="form-control">
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn btn-primary" data-dismiss="modal"
+                                           wire:click="createTicket">
+                                </div>
+                            </div>
+                        </div>
+            @else
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLongTitle">Добавить выставку</h5>
@@ -144,6 +197,10 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Число билетов</label>
                                     <input type="number" wire:model="tickets_count" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Цена билета</label>
+                                    <input type="number" wire:model="price" class="form-control">
                                 </div>
                                 <hr/>
                                 <div class="form-group">
